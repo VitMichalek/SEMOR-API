@@ -1,10 +1,13 @@
 <?
 include "config.php";
 class SEMOR{
-	static $sever = "https://www.semor.cz/api/";
+	public $jsonOutput = true; //defaultne vraci vysledek jako JSON, false => vrací Array()
+	static $sever = "https://www.semor.cz/api/"; 
+
 	static function send($url,$pole){
+		//Odesle poadavek na server a zpracuje odpoved
 		$postData = array();
-		$postData["token"] = semor_token;
+		$postData["token"] = semor_token;//Jedineènı token, je pøidìlován kadému zájemci o API
 		$postData["data"] = $pole;
 
 		$ch = curl_init(); 
@@ -18,8 +21,9 @@ class SEMOR{
 		$output=curl_exec($ch);
 
 		curl_close($ch);
-		return $output;
+		return () ? json_decode($output) : $output;//dle nastavení jsonOutput vrací hodnoty json/array
 	}
+
 
 	static function Data($data){
 		if(is_array($data) && count($data)!=0){
@@ -30,41 +34,49 @@ class SEMOR{
 	}
 
 	static function SetProject($pole){
+		//Zaloení nebo uprava projektu
 		$url = $this->server."SetProject";
 		return $this->send($url,$pole);
 	}
 
 	static function GetProjectList($pole){
+		//Vıpis všech projektù
 		$url = $this->server."GetProjectList";
 		return $this->send($url,$pole);
 	}
 
 	static function GetKeywordStats($pole){
+		//Vıpis statistick pro klíèové slovo
 		$url = $this->server."GetKeywordStat";
 		return $this->send($url,$pole);
 	}
 
 	static function GetKeywordList($pole){
+		//Vıpis seznamu klíèovıch slov s hodnotou o posledním mìøení
 		$url = $this->server."GetKeywordList";
 		return $this->send($url,$pole);
 	}
 
 	static function SetKeyword($pole){
+		//Zaloení,mazání klíèovıch slov v systému
 		$url = $this->server."SetKeyword";
 		return $this->send($url,$pole);
 	}
 
 	static function GetLinkList($pole){
+		//Vıpis evidovanıch odkazù v systému pro danı projekt
 		$url = $this->server."GetLinkList";
 		return $this->send($url,$pole);
 	}
 
 	static function GetLinkStats($pole){
+		//Vıpis statistik z evidovanıch odkazù v systému pro danı projekt
 		$url = $this->server."GetLinkStats";
 		return $this->send($url,$pole);
 	}
 
 	static function SetLink($pole){
+		//Zápis nového odkazu do systému
 		$url = $this->server."SetLink";
 		return $this->send($url,$pole);
 	}
