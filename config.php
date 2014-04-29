@@ -1,3 +1,3 @@
 <?
-define("semor_token","__vas_toke__");
+define("SEMOR_TOKEN","__vas_toke__");
 ?>

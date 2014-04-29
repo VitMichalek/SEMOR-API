@@ -4,10 +4,19 @@ class SEMOR{
 	public $jsonOutput = true; //defaultne vraci vysledek jako JSON, false => vrací Array()
 	static $sever = "https://www.semor.cz/api/"; 
 
+	public function __construct(){
+		$this->testToken();
+	}
+
+	static function testToken(){
+		if(strlen(SEMOR_TOKEN) != 45) return false;
+		return true;
+	}
+
 	static function send($url,$pole){
 		//Odesle požadavek na server a zpracuje odpoved
 		$postData = array();
-		$postData["token"] = semor_token;//Jedineèný token, je pøidìlován každému zájemci o API
+		$postData["token"] = SEMOR_TOKEN;//Jedineèný token, je pøidìlován každému zájemci o API
 		$postData["data"] = $pole;
 
 		$ch = curl_init(); 
