@@ -4,6 +4,7 @@ class SEMOR{
 	static $sever = "https://www.semor.cz/api/";
 	static function send($url,$pole){
 		$postData = array();
+		$postData["token"] = semor_token;
 		$postData["data"] = $pole;
 
 		$ch = curl_init(); 
@@ -28,21 +29,44 @@ class SEMOR{
 		}
 	}
 
-	static function GetProject($pole){
-		$url = $this->server."GetProject";
-		return $this->send($url,$pole);
-	}
-
 	static function SetProject($pole){
 		$url = $this->server."SetProject";
 		return $this->send($url,$pole);
 	}
+
+	static function GetProjectList($pole){
+		$url = $this->server."GetProjectList";
+		return $this->send($url,$pole);
+	}
+
+	static function GetKeywordStats($pole){
+		$url = $this->server."GetKeywordStat";
+		return $this->send($url,$pole);
+	}
+
+	static function GetKeywordList($pole){
+		$url = $this->server."GetKeywordList";
+		return $this->send($url,$pole);
+	}
+
+	static function SetKeyword($pole){
+		$url = $this->server."SetKeyword";
+		return $this->send($url,$pole);
+	}
+
+	static function GetLinkList($pole){
+		$url = $this->server."GetLinkList";
+		return $this->send($url,$pole);
+	}
+
+	static function GetLinkStats($pole){
+		$url = $this->server."GetLinkStats";
+		return $this->send($url,$pole);
+	}
+
+	static function SetLink($pole){
+		$url = $this->server."SetLink";
+		return $this->send($url,$pole);
+	}
 }
-
-$data = array();
-$data["idp"] = 4;
-
-$api = new SEMOR();
-$data = Data($data);
-$api->GetProject($data);
 ?>
