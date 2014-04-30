@@ -100,6 +100,9 @@ class SEMOR{
 
 	static function GetLinkList($pole){
 		//Výpis evidovaných odkazù v systému pro daný projekt
+		/*
+		$pole["idp"] - ID projektu	
+		*/
 		$url = SEMOR::$server."GetLinkList";
 		return SEMOR::send($url,SEMOR::Data($pole));
 	}
