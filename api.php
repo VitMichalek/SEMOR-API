@@ -47,50 +47,70 @@ class SEMOR{
 
 	static function SetProject($pole){
 		//Založení nebo uprava projektu
+		/*
+		$pole["url"] - www projektu
+		$pole["stav"] - ID fráze
+		*/
 		$url = $this->server."SetProject";
-		return $this->send($url,$pole);
+		return $this->send($url,$this->Data($pole));
 	}
 
-	static function GetProjectList($pole){
+	static function GetProjectList(){
 		//Výpis všech projektù
+
 		$url = $this->server."GetProjectList";
-		return $this->send($url,$pole);
+		return $this->send($url,"{}");
 	}
 
 	static function GetKeywordStats($pole){
 		//Výpis statistick pro klíèové slovo
+		/*
+		$pole["idp"] - ID projektu
+		$pole["idk"] - ID fráze
+		*/
 		$url = $this->server."GetKeywordStat";
-		return $this->send($url,$pole);
+		return $this->send($url,$this->Data($pole));
 	}
 
 	static function GetKeywordList($pole){
 		//Výpis seznamu klíèových slov s hodnotou o posledním mìøení
+		/*
+		$pole["idp"] - ID projektu
+		*/
 		$url = $this->server."GetKeywordList";
-		return $this->send($url,$pole);
+		return $this->send($url,$this->Data($pole));
 	}
 
 	static function SetKeyword($pole){
 		//Založení,mazání klíèových slov v systému
+		/*
+		$pole["idp"] - ID projektu
+		$pole["keyword"][] - pole klíèových slov
+		$pole["frekcence"] - frekvence mìøení (0 - 1x za 30 dní, 1 - 1x za 14 dní, 2 - každý den)
+		Smazani slova - znìviditelnìní,pøestane se mìøit
+		$pole["idk"] - ID fráze
+		$pole["stav"] - A zapnuti, C vypnutí mìøení
+		*/
 		$url = $this->server."SetKeyword";
-		return $this->send($url,$pole);
+		return $this->send($url,$this->Data($pole));
 	}
 
 	static function GetLinkList($pole){
 		//Výpis evidovaných odkazù v systému pro daný projekt
 		$url = $this->server."GetLinkList";
-		return $this->send($url,$pole);
+		return $this->send($url,$this->Data($pole));
 	}
 
 	static function GetLinkStats($pole){
 		//Výpis statistik z evidovaných odkazù v systému pro daný projekt
 		$url = $this->server."GetLinkStats";
-		return $this->send($url,$pole);
+		return $this->send($url,$this->Data($pole));
 	}
 
 	static function SetLink($pole){
 		//Zápis nového odkazu do systému
 		$url = $this->server."SetLink";
-		return $this->send($url,$pole);
+		return $this->send($url,$this->Data($pole));
 	}
 }
 ?>
