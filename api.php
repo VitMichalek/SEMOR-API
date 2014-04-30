@@ -114,7 +114,7 @@ class SEMOR{
 	}
 
 	static function GetSpeed($pole){
-		//Výpis evidovaných odkazù v systému pro daný projekt
+		//Výpis posledního mìøení GooglePageSpeed - nejdøíve 10 minut po vložení nového projektu
 		/*
 		$pole["idp"] - ID projektu	
 		*/
