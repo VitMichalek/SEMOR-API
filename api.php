@@ -107,16 +107,16 @@ class SEMOR{
 		return SEMOR::send($url,SEMOR::Data($pole));
 	}
 
-	static function GetLinkStats($pole){
+	/*static function GetLinkStats($pole){
 		//Výpis statistik z evidovaných odkazù v systému pro daný projekt
 		$url = SEMOR::$server."GetLinkStats";
 		return SEMOR::send($url,SEMOR::Data($pole));
-	}
+	}*/
 
-	static function SetLink($pole){
+	/*static function SetLink($pole){
 		//Zápis nového odkazu do systému
 		$url = SEMOR::$server."SetLink";
 		return SEMOR::send($url,SEMOR::Data($pole));
-	}
+	}*/
 }
 ?>
