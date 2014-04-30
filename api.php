@@ -9,8 +9,10 @@ class SEMOR{
 	}
 
 	static function testToken(){
-		if(strlen(SEMOR_TOKEN) != 45) return false;
-		return true;
+		if(strlen(SEMOR_TOKEN) != 45) {
+			echo "Chybnì zadaný token. Zkontrolujte své nastavení v config.php";
+			return;
+		}
 	}
 
 	static function send($url,$pole){
@@ -38,7 +40,8 @@ class SEMOR{
 		if(is_array($data) && count($data)!=0){
 			return json_encode($data);
 		}else{
-		
+			echo "Data v požadavku nejsou vyplnìna!";
+			return;
 		}
 	}
 
