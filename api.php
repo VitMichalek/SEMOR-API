@@ -1,11 +1,11 @@
 <?
 include "config.php";
 class SEMOR{
-	public $jsonOutput = true; //defaultne vraci vysledek jako JSON, false => vrací Array()
-	static $sever = "https://www.semor.cz/api/"; 
+	static $jsonOutput = false; //defaultne vraci vysledek jako JSON, false => vrací Array()
+	static $server = "http://www.semor.cz/api/"; 
 
 	public function __construct(){
-		$this->testToken();
+		SEMOR::testToken();
 	}
 
 	static function testToken(){
@@ -23,7 +23,9 @@ class SEMOR{
 
 		$ch = curl_init(); 
 
-		curl_setopt($ch,CURLOPT_URL,$url);
+
+
+		curl_setopt($ch,CURLOPT_URL,$url."/");
 		curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
 		curl_setopt($ch,CURLOPT_HEADER, false);
 		curl_setopt($ch, CURLOPT_POST, count($postData));
@@ -32,7 +34,7 @@ class SEMOR{
 		$output=curl_exec($ch);
 
 		curl_close($ch);
-		return () ? json_decode($output) : $output;//dle nastavení jsonOutput vrací hodnoty json/array
+		return (!SEMOR::$jsonOutput) ? json_decode($output,true) : $output;//dle nastavení jsonOutput vrací hodnoty json/array
 	}
 
 
@@ -51,15 +53,15 @@ class SEMOR{
 		$pole["url"] - www projektu
 		$pole["stav"] - ID fráze
 		*/
-		$url = $this->server."SetProject";
-		return $this->send($url,$this->Data($pole));
+		$url = SEMOR::$server."SetProject";
+		return SEMOR::send($url,SEMOR::Data($pole));
 	}
 
 	static function GetProjectList(){
 		//Výpis všech projektù
 
-		$url = $this->server."GetProjectList";
-		return $this->send($url,"{}");
+		$url = SEMOR::$server."GetProjectList";
+		return SEMOR::send($url,"{}");
 	}
 
 	static function GetKeywordStats($pole){
@@ -68,8 +70,8 @@ class SEMOR{
 		$pole["idp"] - ID projektu
 		$pole["idk"] - ID fráze
 		*/
-		$url = $this->server."GetKeywordStat";
-		return $this->send($url,$this->Data($pole));
+		$url = SEMOR::$server."GetKeywordStat";
+		return SEMOR::send($url,SEMOR::Data($pole));
 	}
 
 	static function GetKeywordList($pole){
@@ -77,8 +79,8 @@ class SEMOR{
 		/*
 		$pole["idp"] - ID projektu
 		*/
-		$url = $this->server."GetKeywordList";
-		return $this->send($url,$this->Data($pole));
+		$url = SEMOR::$server."GetKeywordList";
+		return SEMOR::send($url,SEMOR::Data($pole));
 	}
 
 	static function SetKeyword($pole){
@@ -86,31 +88,32 @@ class SEMOR{
 		/*
 		$pole["idp"] - ID projektu
 		$pole["keyword"][] - pole klíèových slov
-		$pole["frekcence"] - frekvence mìøení (0 - 1x za 30 dní, 1 - 1x za 14 dní, 2 - každý den)
-		Smazani slova - znìviditelnìní,pøestane se mìøit
-		$pole["idk"] - ID fráze
+		$pole["frekvence"] - frekvence mìøení (0 - 1x za 30 dní, 1 - 1x za 14 dní, 2 - každý den)
 		$pole["stav"] - A zapnuti, C vypnutí mìøení
+		Pokud uvedete idk, system bude dìlat upbdate na tomto IDK, dle nastaveni výše. V tom pøípadì ignoruje položku keyword
+		$pole["idk"] - ID fráze
+		
 		*/
-		$url = $this->server."SetKeyword";
-		return $this->send($url,$this->Data($pole));
+		$url = SEMOR::$server."SetKeyword";
+		return SEMOR::send($url,SEMOR::Data($pole));
 	}
 
 	static function GetLinkList($pole){
 		//Výpis evidovaných odkazù v systému pro daný projekt
-		$url = $this->server."GetLinkList";
-		return $this->send($url,$this->Data($pole));
+		$url = SEMOR::$server."GetLinkList";
+		return SEMOR::send($url,SEMOR::Data($pole));
 	}
 
 	static function GetLinkStats($pole){
 		//Výpis statistik z evidovaných odkazù v systému pro daný projekt
-		$url = $this->server."GetLinkStats";
-		return $this->send($url,$this->Data($pole));
+		$url = SEMOR::$server."GetLinkStats";
+		return SEMOR::send($url,SEMOR::Data($pole));
 	}
 
 	static function SetLink($pole){
 		//Zápis nového odkazu do systému
-		$url = $this->server."SetLink";
-		return $this->send($url,$this->Data($pole));
+		$url = SEMOR::$server."SetLink";
+		return SEMOR::send($url,SEMOR::Data($pole));
 	}
 }
 ?>

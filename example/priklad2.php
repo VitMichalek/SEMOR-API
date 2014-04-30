@@ -10,5 +10,10 @@ $data = array(
 );
 
 $output = $api->GetKeywordList($data);//Vrátí seznam klíèových slov pro daný projekt
-print_r($output);
+
 ?>
+<pre>
+ <?
+ print_r($output);
+ ?>
+</pre>
