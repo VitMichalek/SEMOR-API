@@ -20,3 +20,5 @@ Seznam funkcí:
 -GetKeywordStats
 
 -GetLinkStats
+
+-GetSpeed

@@ -112,5 +112,14 @@ class SEMOR{
 		$url = SEMOR::$server."SetLink";
 		return SEMOR::send($url,SEMOR::Data($pole));
 	}
+
+	static function GetSpeed($pole){
+		//Výpis evidovaných odkazù v systému pro daný projekt
+		/*
+		$pole["idp"] - ID projektu	
+		*/
+		$url = SEMOR::$server."GetSpeed";
+		return SEMOR::send($url,SEMOR::Data($pole));
+	}
 }
 ?>
