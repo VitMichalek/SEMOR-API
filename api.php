@@ -47,18 +47,27 @@ class SEMOR{
 		}
 	}
 
-	static function SetProject($pole){
-		//Založení nebo uprava projektu
+	static function PutProject($pole){
+		//Založení 
 		/*
 		$pole["url"] - www projektu
-		$pole["stav"] - ID fráze
+		*/
+		$url = SEMOR::$server."PutProject";
+		return SEMOR::send($url,SEMOR::Data($pole));
+	}
+
+	static function SetProject($pole){
+		// uprava projektu
+		/*
+		$pole["idp"] - IDP projektu
+		$pole["stav"] - stav projektu A,C
 		*/
 		$url = SEMOR::$server."SetProject";
 		return SEMOR::send($url,SEMOR::Data($pole));
 	}
 
 	static function GetProjectList(){
-		//Výpis všech projektù
+		//Výpis všech projektù pro daný token
 
 		$url = SEMOR::$server."GetProjectList";
 		return SEMOR::send($url,"{}");
@@ -88,8 +97,13 @@ class SEMOR{
 		/*
 		$pole["idp"] - ID projektu
 		$pole["keyword"][] - pole klíèových slov
-		$pole["frekvence"] - frekvence mìøení (0 - 1x za 30 dní, 1 - 1x za 14 dní, 2 - každý den)
-		$pole["active"] - A zapnuti, C vypnutí mìøení
+		$pole["keyword"][0][0] = "slovo";
+		$pole["keyword"][0][1] = "A";
+		$pole["keyword"][0][2] = 0;
+		$pole["keyword"][1][0] = "slovo 2";
+		$pole["keyword"][1][1] = "A";
+		$pole["keyword"][1][2] = 1;
+		//frekvence mìøení (0 - 1x za 30 dní, 1 - 1x za 14 dní, 2 - každý den)
 		Pokud uvedete idk, system bude dìlat upbdate na tomto IDK, dle nastaveni výše. V tom pøípadì ignoruje položku keyword
 		$pole["idk"] - ID fráze
 		
