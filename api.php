@@ -52,6 +52,7 @@ class SEMOR{
 		/*
 		$pole["url"] - www projektu
 		*/
+
 		$url = SEMOR::$server."PutProject";
 		return SEMOR::send($url,SEMOR::Data($pole));
 	}
@@ -123,6 +124,11 @@ class SEMOR{
 
 	static function SetLink($pole){
 		//Zápis nového odkazu do systému
+		/*
+		$pole["source"] - url umisteni odkazu
+		$pole["target"] - url cíle odkazu
+		$pole["anchor"] - anchor odkazu
+		*/
 		$url = SEMOR::$server."SetLink";
 		return SEMOR::send($url,SEMOR::Data($pole));
 	}
