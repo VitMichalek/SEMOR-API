@@ -93,8 +93,8 @@ class SEMOR{
 		return SEMOR::send($url,SEMOR::Data($pole));
 	}
 
-	static function SetKeyword($pole){
-		//Založení,mazání fráze v systému
+	static function PutKeyword($pole){
+		//Založení
 		/*
 		$pole["idp"] - ID projektu
 		$pole["keyword"][] - pole klíèových slov
@@ -107,6 +107,22 @@ class SEMOR{
 		//frekvence mìøení (0 - 1x za 30 dní, 1 - 1x za 14 dní, 2 - každý den)
 		Pokud uvedete idk, system bude dìlat upbdate na tomto IDK, dle nastaveni výše. V tom pøípadì ignoruje položku keyword
 		$pole["idk"] - ID fráze
+		
+		*/
+		$url = SEMOR::$server."PutKeyword";
+		return SEMOR::send($url,SEMOR::Data($pole));
+	}
+
+	static function SetKeyword($pole){
+		//mazání fráze v systému
+		/*
+		$pole["idp"] - ID projektu
+		$pole["keyword"][] - pole klíèových slov
+		$pole["keyword"][idk][0] = stav;
+		$pole["keyword"][idk][1] = frekvence;
+		idk - id klíèového slova
+		
+		Zatim neni pøipraveno
 		
 		*/
 		$url = SEMOR::$server."SetKeyword";
