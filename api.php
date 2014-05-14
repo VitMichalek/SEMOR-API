@@ -79,6 +79,8 @@ class SEMOR{
 		/*
 		$pole["idp"] - ID projektu
 		$pole["idk"] - ID fráze
+		$pole["from"] - YYYY-MM-DD, datum od
+		$pole["to"] - YYYY-MM-DD, datum do
 		*/
 		$url = SEMOR::$server."GetKeywordStat";
 		return SEMOR::send($url,SEMOR::Data($pole));
