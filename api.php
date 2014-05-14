@@ -82,7 +82,7 @@ class SEMOR{
 		$pole["from"] - YYYY-MM-DD, datum od
 		$pole["to"] - YYYY-MM-DD, datum do
 		*/
-		$url = SEMOR::$server."GetKeywordStat";
+		$url = SEMOR::$server."GetKeywordStats";
 		return SEMOR::send($url,SEMOR::Data($pole));
 	}
 
