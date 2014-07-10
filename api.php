@@ -90,6 +90,7 @@ class SEMOR{
 		//Výpis seznamu klíèových slov s hodnotou o posledním mìøení
 		/*
 		$pole["idp"] - ID projektu
+		$pole["active"] - 1/0 vypsání jen aktivích/uživatelem odstranìných odkazù
 		*/
 		$url = SEMOR::$server."GetKeywordList";
 		return SEMOR::send($url,SEMOR::Data($pole));
