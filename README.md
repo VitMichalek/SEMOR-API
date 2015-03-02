@@ -24,3 +24,5 @@ Seznam funkcí:
 -GetLinkStats
 
 -GetSpeed
+
+-GetSerp

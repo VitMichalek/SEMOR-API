@@ -160,5 +160,14 @@ class SEMOR{
 		$url = SEMOR::$server."GetSpeed";
 		return SEMOR::send($url,SEMOR::Data($pole));
 	}
+
+	static function GetSerp($pole){
+		//Výpis 20 vysledku z kazdeho vyhledavaèe pro vsechna merena slova,pri poslednim mereni
+		/*
+		$pole["idp"] - ID projektu	
+		*/
+		$url = SEMOR::$server."GetSerp";
+		return SEMOR::send($url,SEMOR::Data($pole));
+	}
 }
 ?>
