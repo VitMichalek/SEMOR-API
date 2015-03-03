@@ -2,6 +2,7 @@
 include "config.php";
 class SEMOR{
 	static $jsonOutput = false; //defaultne vraci vysledek jako JSON, false => vrací Array()
+	static $method = "P"; // POST/GET
 	static $server = "http://www.semor.cz/api/"; 
 
 	public function __construct(){
@@ -17,20 +18,26 @@ class SEMOR{
 
 	static function send($url,$pole){
 		//Odesle požadavek na server a zpracuje odpoved
-		$postData = array();
-		$postData["token"] = SEMOR_TOKEN;//Jedineèný token, je pøidìlován každému zájemci o API
-		$postData["data"] = $pole;
-
+		
+		$GET = "";
 		$ch = curl_init(); 
 
-
-
-		curl_setopt($ch,CURLOPT_URL,$url."/");
+		
 		curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
 		curl_setopt($ch,CURLOPT_HEADER, false);
-		curl_setopt($ch,CURLOPT_POST, count($postData));
-		curl_setopt($ch,CURLOPT_POSTFIELDS, $postData);   
+		if($this->method == "P"){
+			$postData = array();
+			$postData["token"] = SEMOR_TOKEN;//Jedineèný token, je pøidìlován každému zájemci o API
+			$postData["data"] = $pole;
 
+			curl_setopt($ch,CURLOPT_POST, count($postData));
+			curl_setopt($ch,CURLOPT_POSTFIELDS, $postData);   
+		}else{
+			$GET = "?";
+			$GET.= "token="+SEMOR_TOKEN;
+			$GET.= "&".$pole;
+		}
+		curl_setopt($ch,CURLOPT_URL,$url."/".$GET);
 		$output=curl_exec($ch);
 
 		curl_close($ch);
@@ -40,7 +47,15 @@ class SEMOR{
 
 	static function Data($data){
 		if(is_array($data) && count($data)!=0){
-			return json_encode($data);
+			if($this->method == "P"){
+				return json_encode($data);
+			}else{
+				$prop = array();
+				foreach($data as $i => $o){
+					$prop[] = $i."=".$o;
+				}
+				return join("&",$prop);
+			}
 		}else{
 			echo "Data v požadavku nejsou vyplnìna!";
 			return;
@@ -52,7 +67,7 @@ class SEMOR{
 		/*
 		$pole["url"] - www projektu
 		*/
-
+		$this->method = "P";
 		$url = SEMOR::$server."PutProject";
 		return SEMOR::send($url,SEMOR::Data($pole));
 	}
@@ -63,13 +78,14 @@ class SEMOR{
 		$pole["idp"] - IDP projektu
 		$pole["stav"] - stav projektu A,C
 		*/
+		$this->method = "P";
 		$url = SEMOR::$server."SetProject";
 		return SEMOR::send($url,SEMOR::Data($pole));
 	}
 
 	static function GetProjectList(){
 		//Výpis všech projektù pro daný token
-
+		$this->method = "G";
 		$url = SEMOR::$server."GetProjectList";
 		return SEMOR::send($url,"{}");
 	}
@@ -82,6 +98,7 @@ class SEMOR{
 		$pole["from"] - YYYY-MM-DD, datum od
 		$pole["to"] - YYYY-MM-DD, datum do
 		*/
+		$this->method = "G";
 		$url = SEMOR::$server."GetKeywordStats";
 		return SEMOR::send($url,SEMOR::Data($pole));
 	}
@@ -92,6 +109,7 @@ class SEMOR{
 		$pole["idp"] - ID projektu
 		$pole["active"] - 1/0 vypsání jen aktivích/uživatelem odstranìných odkazù
 		*/
+		$this->method = "G";
 		$url = SEMOR::$server."GetKeywordList";
 		return SEMOR::send($url,SEMOR::Data($pole));
 	}
@@ -112,6 +130,7 @@ class SEMOR{
 		$pole["idk"] - ID fráze
 		
 		*/
+		$this->method = "P";
 		$url = SEMOR::$server."PutKeyword";
 		return SEMOR::send($url,SEMOR::Data($pole));
 	}
@@ -128,6 +147,7 @@ class SEMOR{
 		Zatim neni pøipraveno
 		
 		*/
+		$this->method = "P";
 		$url = SEMOR::$server."SetKeyword";
 		return SEMOR::send($url,SEMOR::Data($pole));
 	}
@@ -137,6 +157,7 @@ class SEMOR{
 		/*
 		$pole["idp"] - ID projektu	
 		*/
+		$this->method = "G";
 		$url = SEMOR::$server."GetLinkList";
 		return SEMOR::send($url,SEMOR::Data($pole));
 	}
@@ -148,6 +169,7 @@ class SEMOR{
 		$pole["target"] - url cíle odkazu
 		$pole["anchor"] - anchor odkazu
 		*/
+		$this->method = "P";
 		$url = SEMOR::$server."SetLink";
 		return SEMOR::send($url,SEMOR::Data($pole));
 	}
@@ -157,6 +179,7 @@ class SEMOR{
 		/*
 		$pole["idp"] - ID projektu	
 		*/
+		$this->method = "G";
 		$url = SEMOR::$server."GetSpeed";
 		return SEMOR::send($url,SEMOR::Data($pole));
 	}
@@ -166,6 +189,7 @@ class SEMOR{
 		/*
 		$pole["idp"] - ID projektu	
 		*/
+		$this->method = "G";
 		$url = SEMOR::$server."GetSerp";
 		return SEMOR::send($url,SEMOR::Data($pole));
 	}
