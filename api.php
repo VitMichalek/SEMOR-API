@@ -193,5 +193,12 @@ class SEMOR{
 		$url = SEMOR::$server."GetSerp";
 		return SEMOR::send($url,SEMOR::Data($pole));
 	}
+
+	static function GetRivalKeywordPosition($pole){
+		//vratí pozice pro klisova slova a vybranou konkurenci - pro oba vyhledavace
+		$this->method = "G";
+		$url = SEMOR::$server."GetRivalKeywordPosition";
+		return SEMOR::send($url,SEMOR::Data($pole));
+	}
 }
 ?>
