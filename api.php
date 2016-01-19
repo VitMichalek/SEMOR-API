@@ -66,6 +66,10 @@ class SEMOR{
 		//Založení 
 		/*
 		$pole["url"] - www projektu
+		$pole["https"] - bìží na https A/N
+		$pole["typ"] - typ projektu 
+						S - mìøení každý den
+						R - mìøení na vyžádání
 		*/
 		$this->method = "P";
 		$url = SEMOR::$server."PutProject";
